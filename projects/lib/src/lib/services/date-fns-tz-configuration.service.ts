@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
-import { OptionsWithTZ } from 'date-fns-tz';
 import { BehaviorSubject } from 'rxjs';
 import { enGB } from 'date-fns/locale';
+import type { FormatOptionsWithTZ, ToDateOptionsWithTZ } from 'date-fns-tz';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DateFnsTzConfigurationService {
-  config$ = new BehaviorSubject<OptionsWithTZ>({
+  config$ = new BehaviorSubject<ToDateOptionsWithTZ | FormatOptionsWithTZ>({
     timeZone: this.resolveBrowserTimeZone(),
     locale: enGB,
-    includeSeconds: false,
-    addSuffix: true
   });
 
   format = 'dd-MM-yyyy HH:mm:ss zzz';
 
-  set config(config: OptionsWithTZ) {
+  set config(config: ToDateOptionsWithTZ | FormatOptionsWithTZ) {
     this.config$.next({ ...this.config$.value, ...config });
   }
 
-  get config(): OptionsWithTZ {
+  get config(): ToDateOptionsWithTZ | FormatOptionsWithTZ {
     return this.config$.value;
   }
 

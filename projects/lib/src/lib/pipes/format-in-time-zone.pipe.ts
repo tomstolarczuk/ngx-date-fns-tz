@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { formatInTimeZone, OptionsWithTZ } from 'date-fns-tz';
+import { formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
 import { isValidDate } from '../util/is-valid';
 import { Subscription } from 'rxjs';
 import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
@@ -22,7 +22,7 @@ export class FormatInTimeZonePipe implements PipeTransform, OnDestroy {
     date: Date | string | number,
     tz: string,
     fmt: string | null,
-    options?: OptionsWithTZ
+    options?: FormatOptionsWithTZ
   ): string {
     if (!isValidDate(date)) return '';
 

@@ -1,6 +1,6 @@
 {
   "name": "ngx-date-fns-tz",
-  "version": "0.0.1",
+  "version": "18.0.0",
   "description": "date-fns-tz pipes for Angular",
   "repository": {
     "type": "git",
@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/tomstolarczuk/ngx-date-fns-tz#readme",
   "peerDependencies": {
-    "@angular/common": ">=14",
-    "@angular/core": ">=14",
-    "date-fns": ">=2",
-    "date-fns-tz": ">=1"
+    "@angular/common": ">=18",
+    "@angular/core": ">=18",
+    "date-fns": ">=3",
+    "date-fns-tz": ">=3"
   },
   "dependencies": {
     "tslib": ">=2.3.0"

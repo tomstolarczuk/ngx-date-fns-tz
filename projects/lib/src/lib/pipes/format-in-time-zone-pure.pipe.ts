@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { formatInTimeZone, OptionsWithTZ } from 'date-fns-tz';
+import { formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
 import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
 import { isValidDate } from '../util/is-valid';
 
@@ -13,7 +13,7 @@ export class FormatInTimeZonePurePipe implements PipeTransform {
     date: Date | string | number,
     tz: string,
     fmt: string,
-    options?: OptionsWithTZ
+    options?: FormatOptionsWithTZ
   ): string {
     if (!isValidDate(date)) return '';
 
