@@ -27,7 +27,7 @@ export class DateFnsTzConfigurationService {
   }
 
   get timeZone(): string {
-    return this.config$.value.timeZone ?? 'UTC';
+    return this.config.timeZone ?? 'UTC';
   }
 
   resolveBrowserTimeZone(): string {

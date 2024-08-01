@@ -4,7 +4,8 @@ import { isValidDate } from '../util/is-valid';
 import { FormatOptionsWithTZ, toZonedTime } from 'date-fns-tz';
 
 @Pipe({
-  name: 'utcToZonedTimePure'
+  name: 'utcToZonedTimePure',
+  standalone: true
 })
 export class UtcToZonedTimePurePipe implements PipeTransform {
   constructor(private dateFnsTzConfig: DateFnsTzConfigurationService) {}

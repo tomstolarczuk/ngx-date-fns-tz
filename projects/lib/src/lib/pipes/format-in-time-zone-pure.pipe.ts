@@ -4,7 +4,8 @@ import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configura
 import { isValidDate } from '../util/is-valid';
 
 @Pipe({
-  name: 'dfnsFormatInTimeZonePure'
+  name: 'dfnsFormatInTimeZonePure',
+  standalone: true
 })
 export class FormatInTimeZonePurePipe implements PipeTransform {
   constructor(private dateFnsTzConfig: DateFnsTzConfigurationService) {}

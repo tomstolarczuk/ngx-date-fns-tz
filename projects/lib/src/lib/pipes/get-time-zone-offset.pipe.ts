@@ -3,7 +3,8 @@ import { getTimezoneOffset } from 'date-fns-tz';
 import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
 
 @Pipe({
-  name: 'dfnsGetTimeZoneOffset'
+  name: 'dfnsGetTimeZoneOffset',
+  standalone: true
 })
 export class GetTimeZoneOffsetPipe implements PipeTransform {
   constructor(private dateFnsTzConfig: DateFnsTzConfigurationService) {}

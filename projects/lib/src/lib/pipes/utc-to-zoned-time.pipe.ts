@@ -6,6 +6,7 @@ import { FormatOptionsWithTZ, toZonedTime } from 'date-fns-tz';
 
 @Pipe({
   name: 'utcToZonedTime',
+  standalone: true,
   pure: false
 })
 export class UtcToZonedTimePipe implements PipeTransform, OnDestroy {

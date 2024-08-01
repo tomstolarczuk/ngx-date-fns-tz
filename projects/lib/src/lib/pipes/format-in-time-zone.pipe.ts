@@ -6,6 +6,7 @@ import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configura
 
 @Pipe({
   name: 'dfnsFormatInTimeZone',
+  standalone: true,
   pure: false
 })
 export class FormatInTimeZonePipe implements PipeTransform, OnDestroy {
