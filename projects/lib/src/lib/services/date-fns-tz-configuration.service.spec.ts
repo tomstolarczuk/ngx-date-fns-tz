@@ -5,10 +5,11 @@ import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configura
 import { DateFnsTzModule } from '../date-fns-tz.module';
 
 @Component({
-  template: `
+    template: `
     <p id="global">{{ date | dfnsFormatInTimeZone: null:'EEE MMM d yyyy HH:mm:ss zzz' }}</p>
     <p id="param">{{ date | dfnsFormatInTimeZone: null:'EEE MMM d yyyy HH:mm:ss zzz':options }}</p>
-  `
+  `,
+    standalone: false
 })
 class TestHostComponent {
   date?: Date;
