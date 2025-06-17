@@ -21,7 +21,7 @@ export class FormatInTimeZonePipe implements PipeTransform, OnDestroy {
 
   transform(
     date: Date | string | number,
-    tz: string,
+    tz: string | null,
     fmt: string | null,
     options?: FormatOptionsWithTZ
   ): string {

@@ -12,7 +12,7 @@ export class FormatInTimeZonePurePipe implements PipeTransform {
 
   transform(
     date: Date | string | number,
-    tz: string,
+    tz: string | null,
     fmt: string,
     options?: FormatOptionsWithTZ
   ): string {
