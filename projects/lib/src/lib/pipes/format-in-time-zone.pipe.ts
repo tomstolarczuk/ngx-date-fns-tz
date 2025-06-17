@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
-import { isValidDate } from '../util/is-valid';
-import { Subscription } from 'rxjs';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
+import { ChangeDetectorRef, effect, inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { isValidDate } from '../util';
+import { DateFnsTzConfigurationService } from '../services';
+import { formatInTimeZone } from 'date-fns-tz';
 
 @Pipe({
   name: 'dfnsFormatInTimeZone',
@@ -10,35 +9,32 @@ import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configura
   pure: false
 })
 export class FormatInTimeZonePipe implements PipeTransform, OnDestroy {
-  sub?: Subscription;
+  private service = inject(DateFnsTzConfigurationService);
+  private cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    private dateFnsTzConfig: DateFnsTzConfigurationService,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.sub = this.dateFnsTzConfig.config$.subscribe(() => this.cdr.markForCheck());
-  }
+  private cleanup = effect(() => {
+    this.service.timeZone;
+    this.service.format;
+    this.service.locale;
+    this.cdr.markForCheck();
+  });
 
   transform(
     date: Date | string | number,
-    tz: string | null,
-    fmt: string | null,
-    options?: FormatOptionsWithTZ
+    tz?: string | null,
+    fmt?: string | null
   ): string {
     if (!isValidDate(date)) return '';
 
-    return formatInTimeZone(
-      date,
-      tz ?? options?.timeZone ?? this.dateFnsTzConfig.timeZone,
-      fmt ?? this.dateFnsTzConfig.format,
-      {
-        ...this.dateFnsTzConfig.config,
-        ...options
-      }
-    );
+    tz = tz ?? this.service.timeZone;
+    fmt = fmt ?? this.service.format;
+
+    return formatInTimeZone(date, tz, fmt, {
+      locale: this.service.locale
+    });
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.cleanup.destroy();
   }
 }

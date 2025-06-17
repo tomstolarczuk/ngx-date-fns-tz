@@ -1,21 +1,24 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
-import { isValidDate } from '../util/is-valid';
-import { FormatOptionsWithTZ, toZonedTime } from 'date-fns-tz';
+import { inject, Pipe, PipeTransform } from '@angular/core';
+import { DateFnsTzConfigurationService } from '../services';
+import { isValidDate } from '../util';
+import { toZonedTime } from 'date-fns-tz';
 
 @Pipe({
   name: 'utcToZonedTimePure',
-  standalone: true
+  standalone: true,
+  pure: true
 })
 export class UtcToZonedTimePurePipe implements PipeTransform {
-  constructor(private dateFnsTzConfig: DateFnsTzConfigurationService) {}
+  private service = inject(DateFnsTzConfigurationService);
 
-  transform(date: Date | string | number, tz: string | null, options?: FormatOptionsWithTZ): Date {
+  transform(
+    date: Date | string | number,
+    tz?: string | null
+  ): Date {
     if (!isValidDate(date)) return new Date(0);
 
-    return toZonedTime(date, tz ?? options?.timeZone ?? this.dateFnsTzConfig.timeZone, {
-      ...this.dateFnsTzConfig.config,
-      ...options
-    });
+    tz = tz ?? this.service.timeZone;
+
+    return toZonedTime(date, tz);
   }
 }

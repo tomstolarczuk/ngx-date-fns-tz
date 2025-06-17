@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
-import { isValidDate } from '../util/is-valid';
-import { FormatOptionsWithTZ, toZonedTime } from 'date-fns-tz';
+import { ChangeDetectorRef, effect, inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { DateFnsTzConfigurationService } from '../services';
+import { isValidDate } from '../util';
+import { toZonedTime } from 'date-fns-tz';
 
 @Pipe({
   name: 'utcToZonedTime',
@@ -10,25 +9,26 @@ import { FormatOptionsWithTZ, toZonedTime } from 'date-fns-tz';
   pure: false
 })
 export class UtcToZonedTimePipe implements PipeTransform, OnDestroy {
-  sub?: Subscription;
+  private service = inject(DateFnsTzConfigurationService);
+  private cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    private dateFnsTzConfig: DateFnsTzConfigurationService,
-    private cdr: ChangeDetectorRef
-  ) {
-    this.sub = this.dateFnsTzConfig.config$.subscribe(() => this.cdr.markForCheck());
-  }
+  private cleanup = effect(() => {
+    this.service.timeZone;
+    this.cdr.markForCheck();
+  });
 
-  transform(date: Date | string | number, tz: string | null, options?: FormatOptionsWithTZ): Date {
+  transform(
+    date: Date | string | number,
+    tz?: string | null,
+  ): Date {
     if (!isValidDate(date)) return new Date(0);
 
-    return toZonedTime(date, tz ?? options?.timeZone ?? this.dateFnsTzConfig.timeZone, {
-      ...this.dateFnsTzConfig.config,
-      ...options
-    });
+    tz = tz ?? this.service.timeZone;
+
+    return toZonedTime(date, tz);
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.cleanup.destroy();
   }
 }

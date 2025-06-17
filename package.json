@@ -29,7 +29,7 @@
     "start": "ng serve",
     "build": "ng build lib",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test lib --watch=false",
+    "test": "ng test lib --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint lib",
     "analyze:app": "npm run build:app && npm run analyze",
     "analyze": "source-map-explorer dist/lib/main-es5.*.js",
@@ -50,7 +50,7 @@
     "@angular/platform-browser-dynamic": "^19.2.14",
     "@angular/router": "^19.2.14",
     "date-fns": "^3.6.0",
-    "date-fns-tz": "^3.1.3",
+    "date-fns-tz": "^3.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"

@@ -1,10 +1,20 @@
+import { DateFnsTzConfigurationService } from '../services';
+import { TestBed } from '@angular/core/testing';
 import { GetTimeZoneOffsetPipe } from './get-time-zone-offset.pipe';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
 
 describe('GetTimeZoneOffsetPipe', () => {
   let pipe: GetTimeZoneOffsetPipe;
 
-  beforeEach(() => (pipe = new GetTimeZoneOffsetPipe(new DateFnsTzConfigurationService())));
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        GetTimeZoneOffsetPipe,
+        DateFnsTzConfigurationService
+      ]
+    });
+
+    pipe = TestBed.inject(GetTimeZoneOffsetPipe);
+  });
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();

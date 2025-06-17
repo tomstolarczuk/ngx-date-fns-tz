@@ -1,15 +1,16 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { inject, Pipe, PipeTransform } from '@angular/core';
 import { getTimezoneOffset } from 'date-fns-tz';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
+import { DateFnsTzConfigurationService } from '../services';
 
 @Pipe({
   name: 'dfnsGetTimeZoneOffset',
-  standalone: true
+  standalone: true,
+  pure: true
 })
 export class GetTimeZoneOffsetPipe implements PipeTransform {
-  constructor(private dateFnsTzConfig: DateFnsTzConfigurationService) {}
+  service = inject(DateFnsTzConfigurationService);
 
   transform(tz?: string, date?: Date): number {
-    return getTimezoneOffset(tz ?? this.dateFnsTzConfig.timeZone, date);
+    return getTimezoneOffset(tz ?? this.service.timeZone, date);
   }
 }

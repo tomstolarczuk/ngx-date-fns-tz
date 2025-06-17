@@ -1,26 +1,28 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { formatInTimeZone, FormatOptionsWithTZ } from 'date-fns-tz';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
-import { isValidDate } from '../util/is-valid';
+import { inject, Pipe, PipeTransform } from '@angular/core';
+import { formatInTimeZone } from 'date-fns-tz';
+import { DateFnsTzConfigurationService } from '../services';
+import { isValidDate } from '../util';
 
 @Pipe({
   name: 'dfnsFormatInTimeZonePure',
-  standalone: true
+  standalone: true,
+  pure: true
 })
 export class FormatInTimeZonePurePipe implements PipeTransform {
-  constructor(private dateFnsTzConfig: DateFnsTzConfigurationService) {}
+  private service = inject(DateFnsTzConfigurationService);
 
   transform(
     date: Date | string | number,
-    tz: string | null,
-    fmt: string,
-    options?: FormatOptionsWithTZ
+    tz?: string | null,
+    fmt?: string | null
   ): string {
     if (!isValidDate(date)) return '';
 
-    return formatInTimeZone(date, tz ?? options?.timeZone ?? this.dateFnsTzConfig.timeZone, fmt, {
-      ...this.dateFnsTzConfig.config,
-      ...options
+    tz = tz ?? this.service.timeZone;
+    fmt = fmt ?? this.service.format;
+
+    return formatInTimeZone(date, tz, fmt, {
+      locale: this.service.locale
     });
   }
 }

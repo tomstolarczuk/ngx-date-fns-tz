@@ -1,17 +1,26 @@
+import { TestBed } from '@angular/core/testing';
 import { FormatInTimeZonePipe } from './format-in-time-zone.pipe';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
-import { MockChangeDetectorRef } from '../util/mock-change-detector-ref';
+import { DateFnsTzConfigurationService } from '../services';
+import { MockChangeDetectorRef } from '../util';
+import { ChangeDetectorRef } from '@angular/core';
 
 describe('FormatInTimeZonePipe', () => {
   let pipe: FormatInTimeZonePipe;
 
-  beforeEach(
-    () =>
-      (pipe = new FormatInTimeZonePipe(
-        new DateFnsTzConfigurationService(),
-        new MockChangeDetectorRef()
-      ))
-  );
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        FormatInTimeZonePipe,
+        DateFnsTzConfigurationService,
+        {
+          provide: ChangeDetectorRef,
+          useClass: MockChangeDetectorRef
+        }
+      ]
+    });
+
+    pipe = TestBed.inject(FormatInTimeZonePipe);
+  });
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();

@@ -1,10 +1,20 @@
+import { DateFnsTzConfigurationService } from '../services';
+import { TestBed } from '@angular/core/testing';
 import { FormatInTimeZonePurePipe } from './format-in-time-zone-pure.pipe';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
 
 describe('FormatInTimeZonePurePipe', () => {
   let pipe: FormatInTimeZonePurePipe;
 
-  beforeEach(() => (pipe = new FormatInTimeZonePurePipe(new DateFnsTzConfigurationService())));
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        FormatInTimeZonePurePipe,
+        DateFnsTzConfigurationService
+      ]
+    });
+
+    pipe = TestBed.inject(FormatInTimeZonePurePipe);
+  });
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();

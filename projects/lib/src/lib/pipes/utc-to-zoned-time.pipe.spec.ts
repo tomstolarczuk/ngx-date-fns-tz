@@ -1,17 +1,26 @@
 import { UtcToZonedTimePipe } from './utc-to-zoned-time.pipe';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
-import { MockChangeDetectorRef } from '../util/mock-change-detector-ref';
+import { DateFnsTzConfigurationService } from '../services';
+import { MockChangeDetectorRef } from '../util';
+import { TestBed } from '@angular/core/testing';
+import { ChangeDetectorRef } from '@angular/core';
 
 describe('UtcToZonedTimePipe', () => {
   let pipe: UtcToZonedTimePipe;
 
-  beforeEach(
-    () =>
-      (pipe = new UtcToZonedTimePipe(
-        new DateFnsTzConfigurationService(),
-        new MockChangeDetectorRef()
-      ))
-  );
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        UtcToZonedTimePipe,
+        DateFnsTzConfigurationService,
+        {
+          provide: ChangeDetectorRef,
+          useClass: MockChangeDetectorRef
+        }
+      ]
+    });
+
+    pipe = TestBed.inject(UtcToZonedTimePipe);
+  });
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();

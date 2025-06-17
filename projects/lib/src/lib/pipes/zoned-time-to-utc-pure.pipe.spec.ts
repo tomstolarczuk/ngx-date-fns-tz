@@ -1,10 +1,20 @@
 import { ZonedTimeToUtcPurePipe } from './zoned-time-to-utc-pure.pipe';
-import { DateFnsTzConfigurationService } from '../services/date-fns-tz-configuration.service';
+import { DateFnsTzConfigurationService } from '../services';
+import { TestBed } from '@angular/core/testing';
 
 describe('ZonedTimeToUtcPurePipe', () => {
   let pipe: ZonedTimeToUtcPurePipe;
 
-  beforeEach(() => (pipe = new ZonedTimeToUtcPurePipe(new DateFnsTzConfigurationService())));
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        ZonedTimeToUtcPurePipe,
+        DateFnsTzConfigurationService,
+      ]
+    });
+
+    pipe = TestBed.inject(ZonedTimeToUtcPurePipe);
+  });
 
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
