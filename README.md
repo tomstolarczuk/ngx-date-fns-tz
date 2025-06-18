@@ -2,7 +2,7 @@
 
 Angular pipes for date-fns-tz, providing timezone support for Angular applications.
 
-[![npm version](https://badge.fury.io/js/ngx-date-fns-tz.svg)](https://badge.fury.io/js/ngx-date-fns-tz)
+[![npm version](https://badge.fury.io/js/ngx-date-fns-tz.svg?branch=master&kill_cache=1)](https://badge.fury.io/js/ngx-date-fns-tz)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Installation
