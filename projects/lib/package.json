@@ -1,6 +1,6 @@
 {
   "name": "ngx-date-fns-tz",
-  "version": "18.1.1",
+  "version": "19.0.0",
   "description": "@date-fns/tz pipes for Angular",
   "repository": {
     "type": "git",
